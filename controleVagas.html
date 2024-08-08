@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Vagas</title>
+    <link rel="stylesheet" href="controleVagas.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="divIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+            <input type="text" id="searchInput" placeholder="Pesquisar por placa">
+            <p>Resultado:</p>
+        </div>
+        <div class="divBotoes">
+            <a id="cadastrar" href="index.html">Cadastrar</a>
+            <a id="autorizaEntrada" href="#">Autorizar Entrada</a>
+            <a id="liberaVaga" href="#">Liberar Vaga</a>
+            <a href="admin.html" id="logoutButton">Logar</a>
+        </div>
+    </div>
+
+    <div class="divResultado" id="resultado">
+
+    </div>
+
+    <div class="vagas-disponiveis">
+        Vagas disponíveis: <span id="vagas">150</span>
+    </div>
+
+    <script>
+
+        if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.href = 'admin.html';
+        }
+
+        const vagasSpan = document.getElementById('vagas');
+        const searchInput = document.getElementById('searchInput');
+        const resultadoDiv = document.getElementById('resultado');
+        const autorizaEntradaButton = document.getElementById('autorizaEntrada');
+        const liberaVagaButton = document.getElementById('liberaVaga');
+
+        function updateVagasDisponiveis() {
+            const vagasDisponiveis = parseInt(localStorage.getItem('vagasDisponiveis')) || 150;
+            vagasSpan.textContent = vagasDisponiveis;
+        }
+
+        function displayResults(results) {
+            if (results.length === 0) {
+                resultadoDiv.innerHTML = '<p>Nenhum resultado encontrado, favor cadastrar nova pessoa.</p>';
+            } else {
+                resultadoDiv.innerHTML = results.map(registro => `
+                    <div>
+                        <p><strong>Nome:</strong> ${registro.nome}</p>
+                        <p><strong>Categoria:</strong> ${registro.categoria}</p>
+                        <p><strong>Celular:</strong> ${registro.celular}</p>
+                        <p><strong>CPF:</strong> ${registro.cpf}</p>
+                        <p><strong>Placa:</strong> ${registro.placa}</p>
+                        <hr>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function searchPlaca(query) {
+            const registros = JSON.parse(localStorage.getItem('registros')) || [];
+            const resultados = registros.filter(registro => registro.placa.includes(query));
+            displayResults(resultados);
+        }
+
+        function decreaseVagas() {
+            let vagasDisponiveis = parseInt(localStorage.getItem('vagasDisponiveis')) || 150;
+            if (vagasDisponiveis > 0) {
+                vagasDisponiveis--;
+                vagasSpan.textContent = vagasDisponiveis;
+                localStorage.setItem('vagasDisponiveis', vagasDisponiveis);
+            } else {
+                alert('Não há vagas disponíveis.');
+            }
+        }
+
+        function increaseVagas() {
+            let vagasDisponiveis = parseInt(localStorage.getItem('vagasDisponiveis')) || 150;
+            vagasDisponiveis++;
+            vagasSpan.textContent = vagasDisponiveis;
+            localStorage.setItem('vagasDisponiveis', vagasDisponiveis);
+        }
+
+        searchInput.addEventListener('input', function () {
+            const query = searchInput.value.trim();
+            if (query === '') {
+                resultadoDiv.innerHTML = '';
+            } else {
+                searchPlaca(query);
+            }
+        });
+
+        autorizaEntradaButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Evita o comportamento padrão do link
+            decreaseVagas();
+        });
+
+        liberaVagaButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Evita o comportamento padrão do link
+            increaseVagas();
+        });
+
+        updateVagasDisponiveis();
+    </script>
+</body>
+
+</html>

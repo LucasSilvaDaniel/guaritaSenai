@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Pesquisa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Pesquisa de Registros</h2>
+        <button id="logoutButton">Logout</button>
+        <div id="recordsList"></div>
+    </div>
+
+    <script>
+        // Verifica se o usuário está autenticado
+        if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.href = 'admin.html';
+        }
+
+        const logoutButton = document.getElementById('logoutButton');
+        const recordsList = document.getElementById('recordsList');
+
+        // Carrega e exibe os registros salvos
+        const registros = JSON.parse(localStorage.getItem('registros')) || [];
+        if (registros.length > 0) {
+            recordsList.innerHTML = '<ul>' + registros.map(registro => `
+                <li>
+                    Categoria: ${registro.categoria}<br>
+                    Nome: ${registro.nome}<br>
+                    Celular: ${registro.celular}<br>
+                    CPF: ${registro.cpf}<br>
+                    Placa: ${registro.placa}
+                </li>
+            `).join('') + '</ul>';
+        } else {
+            recordsList.textContent = 'Nenhum registro encontrado.';
+        }
+
+        // Adiciona funcionalidade de logout
+        logoutButton.addEventListener('click', function() {
+            localStorage.removeItem('isAdminLoggedIn');
+            window.location.href = 'admin.html';
+        });
+    </script>
+</body>
+
+</html>

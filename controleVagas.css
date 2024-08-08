@@ -1,0 +1,120 @@
+body {
+    background-color: #121212;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #E0E0E0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+    margin: 30px auto;
+    width: 90%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.divIcon {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+svg {
+    color: #BB86FC;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+svg:hover {
+    color: #03DAC6;
+}
+
+input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #BB86FC;
+    background-color: #121212;
+    color: #E0E0E0;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input::placeholder {
+    color: #E0E0E0;
+    opacity: 0.8;
+}
+
+input:focus {
+    border-color: #03DAC6;
+    outline: none;
+}
+
+.divBotoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+a {
+    color: #121212;
+    background-color: #BB86FC;
+    border-radius: 10px;
+    width: 160px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    background-color: #03DAC6;
+    color: #121212;
+}
+
+p {
+    font-weight: 400;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.vagas-disponiveis {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #03DAC6;
+    background-color: #1F1F1F;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.divResultado {
+    background-color: #1F1F1F;
+    color: #E0E0E0;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 30px auto;
+    width: 85%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.divResultado p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.divResultado hr {
+    border: 1px solid #BB86FC;
+    margin: 15px 0;
+}
